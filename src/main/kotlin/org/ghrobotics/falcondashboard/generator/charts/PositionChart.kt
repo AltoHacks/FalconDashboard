@@ -25,8 +25,8 @@ import tornadofx.style
  * generator.
  */
 object PositionChart : LineChart<Number, Number>(
-    NumberAxis(0.0, 54.0, 1.0),
-    NumberAxis(0.0, 27.0, 1.0)
+    NumberAxis(0.0, 30.0, 1.0),
+    NumberAxis(0.0, 15.0, 1.0)
 ) {
     // Series
     private val seriesXY = Series<Number, Number>()
@@ -125,5 +125,5 @@ object PositionChart : LineChart<Number, Number>(
         }
     }
 
-    override fun resize(width: Double, height: Double) = super.resize(height / 27 * 54, height)
+    override fun resize(width: Double, height: Double) = super.resize(height / 15 * 30, height)
 }

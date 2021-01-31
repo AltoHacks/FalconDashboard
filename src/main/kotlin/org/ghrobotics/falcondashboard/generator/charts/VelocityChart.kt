@@ -19,7 +19,7 @@ object VelocityChart : LineChart<Number, Number>(NumberAxis(), NumberAxis()) {
             backgroundColor = MultiValue(arrayOf<Paint>(Color.LIGHTGRAY))
         }
 
-        setMinSize(54 * 25.0, 27 * 25.0)
+        setMinSize(30 * 25.0, 15 * 25.0)
 
         axisSortingPolicy = SortingPolicy.NONE
         isLegendVisible = false
