@@ -53,7 +53,7 @@ class KtCodeFragment : Fragment() {
                 append(
                     "new Pose2d(Units.feetToMeters(${dm.format(GeneratorView.waypoints.first().translation.x_u.inFeet())}), " +
                             "Units.feetToMeters(${dm.format(GeneratorView.waypoints.first().translation.y_u.inFeet())}), " +
-                            " Rotation2d.fromDegrees(${dm.format(GeneratorView.waypoints.first().rotation.degrees)}))\n"
+                            " Rotation2d.fromDegrees(${dm.format(GeneratorView.waypoints.first().rotation.degrees)})),\n"
                 )
 //                append("val $name = DefaultTrajectoryGenerator.generateTrajectory(\n")
                 if (GeneratorView.waypoints.size >2){
@@ -61,11 +61,11 @@ class KtCodeFragment : Fragment() {
                     GeneratorView.waypoints.forEach {
                         if (it != GeneratorView.waypoints.last() && it != GeneratorView.waypoints.first()) {
                             append(
-                                "   new Translation2d((Units.feetToMeters(${dm.format(it.translation.x_u.inFeet())}), " +
+                                "   new Translation2d(Units.feetToMeters(${dm.format(it.translation.x_u.inFeet())}), " +
                                         "Units.feetToMeters(${dm.format(it.translation.y_u.inFeet())}))"
                             )
                             
-                            if (it != GeneratorView.waypoints[GeneratorView.waypoints.size - 2]) append(",")
+                            if (it != GeneratorView.waypoints[GeneratorView.waypoints.size - 2]) append(",\n")
                         }
                         
                     }
@@ -74,7 +74,7 @@ class KtCodeFragment : Fragment() {
                 append(
                     "new Pose2d(Units.feetToMeters(${dm.format(GeneratorView.waypoints.last().translation.x_u.inFeet())}), " +
                             "Units.feetToMeters(${dm.format(GeneratorView.waypoints.last().translation.y_u.inFeet())}), " +
-                            " Rotation2d.fromDegrees(${dm.format(GeneratorView.waypoints.last().rotation.degrees)}))"
+                            " Rotation2d.fromDegrees(${dm.format(GeneratorView.waypoints.last().rotation.degrees)})),"
                 )
 //                append(
 //                    "    constraints = listOf(CentripetalAccelerationConstraint(${Settings.maxCentripetalAcceleration.value}.feet.acceleration),\n" +
@@ -90,11 +90,11 @@ class KtCodeFragment : Fragment() {
             style {
                 padding = box(0.5.em, 0.em, 0.em, 0.em)
             }
-            add(text(" This code is generated to be used with FalconLibrary"))
-            add(hyperlink("https://github.com/5190GreenHopeRobotics/FalconLibrary") {
+            add(text(" This code is generated to be used with WPILIB Java"))
+            add(hyperlink("https://docs.wpilib.org/en/stable/docs/software/advanced-controls/trajectories/trajectory-generation.html") {
                 setOnAction {
                     Desktop.getDesktop()
-                        .browse(URI("https://github.com/5190GreenHopeRobotics/FalconLibrary"))
+                        .browse(URI("https://docs.wpilib.org/en/stable/docs/software/advanced-controls/trajectories/trajectory-generation.html"))
                 }
             })
         }
