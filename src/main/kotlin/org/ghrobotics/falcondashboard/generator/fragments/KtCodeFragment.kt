@@ -50,6 +50,11 @@ class KtCodeFragment : Fragment() {
 
                 val dm = DecimalFormat("##.###")
                 
+                if (GeneratorView.waypoints.size <=2){
+                    append("List.of(\n")
+                }
+
+
                 append(
                     "new Pose2d(Units.feetToMeters(${dm.format(GeneratorView.waypoints.first().translation.x_u.inFeet())}), " +
                             "Units.feetToMeters(${dm.format(GeneratorView.waypoints.first().translation.y_u.inFeet())}), " +
@@ -74,8 +79,15 @@ class KtCodeFragment : Fragment() {
                 append(
                     "new Pose2d(Units.feetToMeters(${dm.format(GeneratorView.waypoints.last().translation.x_u.inFeet())}), " +
                             "Units.feetToMeters(${dm.format(GeneratorView.waypoints.last().translation.y_u.inFeet())}), " +
-                            " Rotation2d.fromDegrees(${dm.format(GeneratorView.waypoints.last().rotation.degrees)})),"
+                            " Rotation2d.fromDegrees(${dm.format(GeneratorView.waypoints.last().rotation.degrees)}))"
                 )
+
+                if (GeneratorView.waypoints.size <=2){
+                    append("\n),\n")
+                }else{
+                    append(",")
+                }
+
 //                append(
 //                    "    constraints = listOf(CentripetalAccelerationConstraint(${Settings.maxCentripetalAcceleration.value}.feet.acceleration),\n" +
 //                            "    startVelocity = 0.0.feet.velocity,\n" +

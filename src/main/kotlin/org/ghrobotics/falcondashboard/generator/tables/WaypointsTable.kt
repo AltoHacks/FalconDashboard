@@ -135,49 +135,86 @@ object WaypointsTable : TableView<Pose2d>(GeneratorView.waypoints) {
 
     fun loadFromText(text: String) {
         val lines = text.lines()
+        println(lines.size)
 
-        val poses: List<Pose2d?> = lines.map {
-            if(it.isEmpty()) return@map null
-            var trim = it
-                .replace(" ", "")
-                .let { it2 -> if(it2.last() == ',') it2.substring(0, it2.length - 1) else it2 }
-                .let { it2 -> if(!it2.startsWith("Pose2d", true)) null else it2 } ?: return@map null
+        var poses: ArrayList<Pose2d?> = arrayListOf()
+           
+            
+       
 
-            // so at this point all of our text starts with Pose2d and ends with a closing paren.
-            // start by removing the starting and closing parenthesis
+        for (it in lines) {
+            //if(it.isEmpty()) return@map null
+            //var pose: Pose2d = Pose2d();
+            if(lines.size == 4){
+                if(!it.equals("List.of(") && !it.equals("),")){
+                    //var trim = it
+                    //.replace(" ", "")
+                    //.let { it2 -> if(it2.last() == ',') it2.substring(0, it2.length - 1) else it2 }
 
-            trim = trim.substring(7, trim.length- 1)
-            val x = trim.substring(0, trim.indexOf(".feet"))
-                .let { it2 ->
-                    if(it2.startsWith("(") || it2.endsWith(")")) {
-                        return@let it2.substring(1, it2.length - 1)
-                    } else it2
-                }
-                .toDouble()
-            val trimNoX = trim.substring(trim.indexOf(".feet") + 6, trim.length)
-            val y = trimNoX.substring(0, trimNoX.indexOf(".feet"))
-                .let { it2 ->
-                    if(it2.startsWith("(") || it2.endsWith(")")) {
-                        return@let it2.substring(1, it2.length - 1)
-                    } else it2
-                }
-                .toDouble()
-            val trimNoY = trimNoX.substring(trimNoX.indexOf(".feet") + 6, trimNoX.length)
-            val theta: Double = trimNoY.let { noY ->
-                val index: Int = noY.indexOf(".degrees").let { ret ->
-                    if(ret < 0) noY.indexOf(".degree") else ret
-                }
-                val numberWithMaybeParens = noY.substring(0, index)
-                if(numberWithMaybeParens.startsWith("(") || numberWithMaybeParens.endsWith(")")) {
-                    return@let numberWithMaybeParens.substring(1, numberWithMaybeParens.length - 1).toDouble()
-                }
-                return@let numberWithMaybeParens.toDouble()
+                    val noSpace = it.replace(" ", "")
+                    val trimX = noSpace.substring(29, noSpace.indexOf(")"))
+                    //var trimX = trimToX.substring(0, )
+                    //println(noSpace.substring(29, noSpace.indexOf(")")))
+                    //println(trim2.substring(0, trim.indexOf(")")).indexOf(")"))
+                    val x = trimX.toDouble()
+                    val trimXOut = noSpace.substring(noSpace.indexOf(")") + 21, noSpace.length)
+                    val trimY = trimXOut.substring(0, trimXOut.indexOf(")"))
+                    println(trimY)
+                    val y = trimY.toDouble()
+                    val trimYOut = noSpace.substring(noSpace.indexOf(")") + 25, noSpace.length)
+                    val trimT = trimYOut.substring(0, trimXOut.indexOf(")"))
+                    println(trimT)
+                    val theta: Double = trimT.toDouble()
+                    poses.add(Pose2d(x.feet, y.feet, theta.degrees))
+                    
+                } 
             }
-            val pose = Pose2d(x.feet, y.feet, theta.degrees)
-            pose
-        }
+
+
+         }
+         
         GeneratorView.waypoints.setAll(poses.filterNotNull())
     }
+
+            // var trim = it
+            //     .replace(" ", "")
+            //     .let { it2 -> if(it2.last() == ',') it2.substring(0, it2.length - 1) else it2 }
+            //     .let { it2 -> if(!it2.startsWith("Pose2d", true)) null else it2 } ?: return@map null
+
+            // // so at this point all of our text starts with Pose2d and ends with a closing paren.
+            // // start by removing the starting and closing parenthesis
+
+            // trim = trim.substring(7, trim.length- 1)
+            // val x = trim.substring(0, trim.indexOf(".feet"))
+            //     .let { it2 ->
+            //         if(it2.startsWith("(") || it2.endsWith(")")) {
+            //             return@let it2.substring(1, it2.length - 1)
+            //         } else it2
+            //     }
+            //     .toDouble()
+            // val trimNoX = trim.substring(trim.indexOf(".feet") + 6, trim.length)
+            // val y = trimNoX.substring(0, trimNoX.indexOf(".feet"))
+            //     .let { it2 ->
+            //         if(it2.startsWith("(") || it2.endsWith(")")) {
+            //             return@let it2.substring(1, it2.length - 1)
+            //         } else it2
+            //     }
+            //     .toDouble()
+            // val trimNoY = trimNoX.substring(trimNoX.indexOf(".feet") + 6, trimNoX.length)
+            // val theta: Double = trimNoY.let { noY ->
+            //     val index: Int = noY.indexOf(".degrees").let { ret ->
+            //         if(ret < 0) noY.indexOf(".degree") else ret
+            //     }
+            //     val numberWithMaybeParens = noY.substring(0, index)
+            //     if(numberWithMaybeParens.startsWith("(") || numberWithMaybeParens.endsWith(")")) {
+            //         return@let numberWithMaybeParens.substring(1, numberWithMaybeParens.length - 1).toDouble()
+            //     }
+            //     return@let numberWithMaybeParens.toDouble()
+            // }
+            // val pose = Pose2d(x.feet, y.feet, theta.degrees)
+            // pose
+        //}
+    
 
     fun removeSelectedItemIfPossible() {
         val item = selectionModel.selectedItem

@@ -165,8 +165,8 @@ class GeneratorView : View() {
 
     companion object {
         val waypoints = observableListOf(
-            Pose2d(5.feet, 5.feet, Rotation2d()),
-            Pose2d(5.feet, 5.feet, Rotation2d())
+            Pose2d(1.5.feet, 23.feet, Rotation2d()),
+            Pose2d(11.5.feet, 23.feet, Rotation2d())
         )
 
         private val config: TrajectoryConfig =
