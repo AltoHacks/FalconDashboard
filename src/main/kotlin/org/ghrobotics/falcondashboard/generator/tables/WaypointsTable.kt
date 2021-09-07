@@ -135,18 +135,30 @@ object WaypointsTable : TableView<Pose2d>(GeneratorView.waypoints) {
 
     fun loadFromText(text: String) {
         val lines = text.lines()
-        println(lines.size)
+        var linesEdited: ArrayList<String> = arrayListOf()
 
         var poses: ArrayList<Pose2d?> = arrayListOf()
            
             
-       
-
         for (it in lines) {
+            val noSpace = it.replace(" ", "")
+            if(noSpace.length > 1){
+                linesEdited.add(it)
+            }
+        }
+        println(lines.size)
+        println(linesEdited.size)
+
+        for (it in linesEdited) {
             //if(it.isEmpty()) return@map null
             //var pose: Pose2d = Pose2d();
-            if(lines.size == 4){
-                if(!it.equals("List.of(") && !it.equals("),")){
+            //if(linesEdited.size == 4){
+            if(!it.equals("List.of(") && !it.equals("),")){
+
+
+                if(it.length > 70) {
+
+                
                     //var trim = it
                     //.replace(" ", "")
                     //.let { it2 -> if(it2.last() == ',') it2.substring(0, it2.length - 1) else it2 }
@@ -161,13 +173,26 @@ object WaypointsTable : TableView<Pose2d>(GeneratorView.waypoints) {
                     val trimY = trimXOut.substring(0, trimXOut.indexOf(")"))
                     println(trimY)
                     val y = trimY.toDouble()
-                    val trimYOut = noSpace.substring(noSpace.indexOf(")") + 25, noSpace.length)
-                    val trimT = trimYOut.substring(0, trimXOut.indexOf(")"))
+                    val trimYOut = trimXOut.substring(trimXOut.indexOf(")") + 25, trimXOut.length)
+                    val trimT = trimYOut.substring(0, trimYOut.indexOf(")"))
                     println(trimT)
                     val theta: Double = trimT.toDouble()
                     poses.add(Pose2d(x.feet, y.feet, theta.degrees))
                     
-                } 
+                } else {
+                    val noSpace = it.replace(" ", "")
+                    val trimX = noSpace.substring(36, noSpace.indexOf(")"))
+                    //var trimX = trimToX.substring(0, )
+                    //println(noSpace.substring(29, noSpace.indexOf(")")))
+                    //println(trim2.substring(0, trim.indexOf(")")).indexOf(")"))
+                    val x = trimX.toDouble()
+                    val trimXOut = noSpace.substring(noSpace.indexOf(")") + 21, noSpace.length)
+                    val trimY = trimXOut.substring(0, trimXOut.indexOf(")"))
+                    println(trimY)
+                    val y = trimY.toDouble()
+                    val theta: Double = 0.0
+                    poses.add(Pose2d(x.feet, y.feet, theta.degrees))
+                }
             }
 
 

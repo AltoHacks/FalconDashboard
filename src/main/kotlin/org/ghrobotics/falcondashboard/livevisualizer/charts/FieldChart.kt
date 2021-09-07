@@ -17,8 +17,8 @@ import tornadofx.multi
 import tornadofx.style
 
 object FieldChart : LineChart<Number, Number>(
-    NumberAxis(0.0, 30.0, 1.0),
-    NumberAxis(0.0, 15.0, 1.0)
+    NumberAxis(0.0, 54.0, 1.0),
+    NumberAxis(0.0, 27.0, 1.0)
 ) {
 
     private val robotSeries = XYChart.Series<Number, Number>()
@@ -51,9 +51,9 @@ object FieldChart : LineChart<Number, Number>(
     }
 
     override fun resize(width: Double, height: Double) {
-        val newWidth = height / 15 * 30
+        val newWidth = height / 27 * 54
         if (newWidth > width) {
-            super.resize(width, width / 30 * 15)
+            super.resize(width, width / 54 * 27)
         } else {
             super.resize(newWidth, height)
         }
@@ -129,4 +129,3 @@ object FieldChart : LineChart<Number, Number>(
         pathSeries.data.clear()
     }
 }
-
