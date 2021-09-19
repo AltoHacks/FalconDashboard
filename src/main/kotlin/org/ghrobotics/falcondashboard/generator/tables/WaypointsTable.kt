@@ -153,7 +153,8 @@ object WaypointsTable : TableView<Pose2d>(GeneratorView.waypoints) {
             //if(it.isEmpty()) return@map null
             //var pose: Pose2d = Pose2d();
             //if(linesEdited.size == 4){
-            if(!it.equals("List.of(") && !it.equals("),")){
+            val noSpace = it.replace(" ", "")
+            if(!noSpace.equals("List.of(") && !noSpace.equals("),")){
 
 
                 if(it.length > 70) {
@@ -163,7 +164,6 @@ object WaypointsTable : TableView<Pose2d>(GeneratorView.waypoints) {
                     //.replace(" ", "")
                     //.let { it2 -> if(it2.last() == ',') it2.substring(0, it2.length - 1) else it2 }
 
-                    val noSpace = it.replace(" ", "")
                     val trimX = noSpace.substring(29, noSpace.indexOf(")"))
                     //var trimX = trimToX.substring(0, )
                     //println(noSpace.substring(29, noSpace.indexOf(")")))
@@ -180,7 +180,7 @@ object WaypointsTable : TableView<Pose2d>(GeneratorView.waypoints) {
                     poses.add(Pose2d(x.feet, y.feet, theta.degrees))
                     
                 } else {
-                    val noSpace = it.replace(" ", "")
+                    
                     val trimX = noSpace.substring(36, noSpace.indexOf(")"))
                     //var trimX = trimToX.substring(0, )
                     //println(noSpace.substring(29, noSpace.indexOf(")")))
