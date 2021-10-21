@@ -157,7 +157,7 @@ object WaypointsTable : TableView<Pose2d>(GeneratorView.waypoints) {
             if(!noSpace.equals("List.of(") && !noSpace.equals("),")){
 
 
-                if(it.length > 70) {
+                if(noSpace.length > 79) {
 
                 
                     //var trim = it
